@@ -21,9 +21,9 @@
         <Label x:Name="CountNodes" Content="0" HorizontalAlignment="Left" Margin="380,64,0,0" VerticalAlignment="Top" Width="45"/>
         <Label Content="Библиотека:" HorizontalAlignment="Left" Margin="8,63,0,0" VerticalAlignment="Top"/>
         <Label x:Name="DllNameLabel" Content="none" HorizontalAlignment="Left" Margin="90,63,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="ButtonSave_Q" Content="Выбрать" HorizontalAlignment="Left" Margin="354,193,0,0" VerticalAlignment="Top" Width="78" Height="23" Click="ButtonSave_Q_Click" IsEnabled="False"/>
-        <TextBox x:Name="FileOutput_Q" HorizontalAlignment="Left" Height="23" Margin="8,193,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="346" IsEnabled="False"/>
-        <Button x:Name="ButtonSave_R" Content="Выбрать" HorizontalAlignment="Left" Margin="354,145,0,0" VerticalAlignment="Top" Width="78" Height="23" Click="ButtonSave_R_Click" IsEnabled="False"/>
-        <TextBox x:Name="FileOutput_R" HorizontalAlignment="Left" Height="23" Margin="8,145,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="346" IsEnabled="False"/>
+        <Button x:Name="ButtonSaveQ" Content="Выбрать" HorizontalAlignment="Left" Margin="354,193,0,0" VerticalAlignment="Top" Width="78" Height="23" Click="ButtonSave_Q_Click" IsEnabled="False"/>
+        <TextBox x:Name="FileOutputQ" HorizontalAlignment="Left" Height="23" Margin="8,193,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="346" IsEnabled="False"/>
+        <Button x:Name="ButtonSaveR" Content="Выбрать" HorizontalAlignment="Left" Margin="354,145,0,0" VerticalAlignment="Top" Width="78" Height="23" Click="ButtonSave_R_Click" IsEnabled="False"/>
+        <TextBox x:Name="FileOutputR" HorizontalAlignment="Left" Height="23" Margin="8,145,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="346" IsEnabled="False"/>
     </Grid>
 </Window>

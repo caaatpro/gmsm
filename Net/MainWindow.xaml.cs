@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
 using CheckBox = System.Windows.Controls.CheckBox;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Net
 {
@@ -58,7 +61,6 @@ namespace Net
             Console.WriteLine(1);
             Console.WriteLine(dlg.FileName);
 #endif
-
             var fileInfo = new FileInfo(dlg.FileName);
 
             // проверка формата
@@ -94,6 +96,7 @@ namespace Net
                     // обработка - убираем лишние пробылы
                     temp = Regex.Replace(temp, " +", " ");
 
+                    if (temp.Length == 0) continue;
                     if (temp.Substring(temp.Length - 1, 1) == ",") continue;
                     temp = Regex.Replace(temp, ",", " ");
 
@@ -156,7 +159,7 @@ namespace Net
 	        };
 
             if (saveFileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
-            FileOutput_Q.Text = saveFileDialog.FileName;
+            FileOutputQ.Text = saveFileDialog.FileName;
             QFile = saveFileDialog.FilterIndex;
         }
 
@@ -172,7 +175,7 @@ namespace Net
             };
 
             if (saveFileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
-            FileOutput_R.Text = saveFileDialog.FileName;
+            FileOutputR.Text = saveFileDialog.FileName;
             RFile = saveFileDialog.FilterIndex;
         }
 
@@ -186,9 +189,13 @@ namespace Net
 
                 return;
             }
-       
+
+            var sw = new Stopwatch();
+            sw.Start();
+
+
             // Строим матрицу R
-            if (FileOutput_R.Text != "")
+            if (FileOutputR.Text != "")
             {
                 ProgressLabel.Content = @"Построение матрицы R";
                 Progress.Value = 1;
@@ -196,7 +203,7 @@ namespace Net
             }
 
             // Строим матрицу Q
-            if (FileOutput_Q.Text != "")
+            if (FileOutputQ.Text != "")
             {
                 ProgressLabel.Content = @"Построение матрицы Q";
                 Progress.Value = 3;
@@ -204,7 +211,7 @@ namespace Net
             }
 
             // Проверка пути сохранения
-            if ((CheckBoxQ.IsChecked == true && FileOutput_Q.Text == "") || (CheckBoxR.IsChecked == true && FileOutput_R.Text == ""))
+            if ((CheckBoxQ.IsChecked == true && FileOutputQ.Text == "") || (CheckBoxR.IsChecked == true && FileOutputR.Text == ""))
             {
                 Progress.Value = 0;
                 ProgressLabel.Content = @"Ошибка! Пустое имя пути не допускается.";
@@ -217,6 +224,11 @@ namespace Net
             Progress.Value = 4;
 
             SaveFiles();
+  
+
+            sw.Stop();
+            MessageBox.Show((sw.ElapsedMilliseconds).ToString(CultureInfo.InvariantCulture) + " мс");
+
 
             ProgressLabel.Content = @"Сохренение завершено";
             Progress.Value = 0;
@@ -234,7 +246,7 @@ namespace Net
                 switch (RFile)
                 {
                     case 1:
-                        using (var str = new StreamWriter(FileOutput_R.Text, false))
+                        using (var str = new StreamWriter(FileOutputR.Text, false))
                         {
                             foreach (var t in R)
                             {
@@ -248,7 +260,7 @@ namespace Net
                         }
                         break;
                     default: // 2 - .txt
-                        using (var str = new StreamWriter(FileOutput_R.Text, false))
+                        using (var str = new StreamWriter(FileOutputR.Text, false))
                         {
                             foreach (var t in R)
                             {
@@ -270,7 +282,7 @@ namespace Net
                 switch (QFile)
                 {
                     case 1:
-                        using (var str = new StreamWriter(FileOutput_Q.Text, false))
+                        using (var str = new StreamWriter(FileOutputQ.Text, false))
                         {
                             foreach (var t in Q)
                             {
@@ -284,7 +296,7 @@ namespace Net
                         }
                         break;
                     default: // 2 - .txt
-                        using (var str = new StreamWriter(FileOutput_Q.Text, false))
+                        using (var str = new StreamWriter(FileOutputQ.Text, false))
                         {
                             foreach (var t in Q)
                             {
@@ -594,10 +606,10 @@ namespace Net
             CheckBoxR.IsChecked = false;
             CheckBoxQ.IsChecked = false;
 
-            FileOutput_R.Text = "";
-            FileOutput_Q.Text = "";
-            FileOutput_R.IsEnabled = false;
-            FileOutput_Q.IsEnabled = false;
+            FileOutputR.Text = "";
+            FileOutputQ.Text = "";
+            FileOutputR.IsEnabled = false;
+            FileOutputQ.IsEnabled = false;
             
             QFile = 0;
             RFile = 0;
@@ -655,14 +667,14 @@ namespace Net
 
             if (cb.IsChecked == true)
             {
-                ButtonSave_Q.IsEnabled = true;
-                FileOutput_Q.IsEnabled = true;
+                ButtonSaveQ.IsEnabled = true;
+                FileOutputQ.IsEnabled = true;
                 Button.IsEnabled = true;
             }
             else
             {
-                ButtonSave_Q.IsEnabled = false;
-                FileOutput_Q.IsEnabled = false;
+                ButtonSaveQ.IsEnabled = false;
+                FileOutputQ.IsEnabled = false;
                 Button.IsEnabled = false;
             }
         }
@@ -673,14 +685,14 @@ namespace Net
 
             if (cb.IsChecked == true)
             {
-                ButtonSave_R.IsEnabled = true;
-                FileOutput_R.IsEnabled = true;
+                ButtonSaveR.IsEnabled = true;
+                FileOutputR.IsEnabled = true;
                 Button.IsEnabled = true;
             }
             else
             {
-                ButtonSave_R.IsEnabled = false;
-                FileOutput_R.IsEnabled = false;
+                ButtonSaveR.IsEnabled = false;
+                FileOutputR.IsEnabled = false;
                 Button.IsEnabled = false;
             }
         }
